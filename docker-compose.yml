@@ -1,0 +1,13 @@
+
+services:
+  connect4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: connect4-game
+    ports:
+      - "8777:8777"
+    restart: unless-stopped
+    volumes:
+      # Mount a data directory to persist the SQLite database across container restarts
+      - ./data:/app/backend/data

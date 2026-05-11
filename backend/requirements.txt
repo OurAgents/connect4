@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sqlalchemy
+websockets
+jinja2
+pydantic
+python-dotenv
