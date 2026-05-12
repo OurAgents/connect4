@@ -10,7 +10,6 @@ services:
     volumes:
       # Mount a data directory to persist the SQLite database across container restarts
       - ./data:/app/backend/data
-<<<<<<< HEAD
   tunnel:
     image: cloudflare/cloudflared:latest
     container_name: connect4-tunnel
