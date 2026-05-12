@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Leaderboard } from './components/Leaderboard';
 import { ChallengeModal } from './components/ChallengeModal';
 import { Connect4Board } from './components/Connect4Board';
+import { playMeow, playReplyMeow, playWin, playLose, playSwish } from './utils/audio';
 
 function App() {
   const [name, setName] = useState('');
@@ -48,15 +49,32 @@ function App() {
       if (data.type === 'state_update') {
         setWaitingPlayers(data.waiting_players);
       } else if (data.type === 'challenge_received') {
+        playMeow();
         setIncomingChallenge({
           challenger_id: data.challenger_id,
           challenger_name: data.challenger_name
         });
       } else if (data.type === 'challenge_declined') {
         alert(`${data.target_name} declined your challenge.`);
-      } else if (data.type === 'game_started' || data.type === 'game_update') {
+      } else if (data.type === 'game_started') {
         setGameState(data.state);
         setIncomingChallenge(null);
+        // If we are starting a game, we play the reply meow (the challenge was accepted)
+        playReplyMeow();
+      } else if (data.type === 'game_update') {
+        setGameState(data.state);
+        setIncomingChallenge(null);
+        playSwish(); // chip dropping
+        
+        if (data.state.status === 'won') {
+           if (data.state.winner === id) {
+               playWin();
+           } else {
+               playLose();
+           }
+        } else if (data.state.status === 'draw') {
+           playWin(); // Draw gives win to both
+        }
       } else if (data.type === 'opponent_disconnected') {
         alert("Your opponent has disconnected. You've been returned to the lobby.");
         setGameState(null);
