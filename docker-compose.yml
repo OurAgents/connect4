@@ -1,4 +1,3 @@
-
 services:
   connect4:
     build:
@@ -11,3 +10,13 @@ services:
     volumes:
       # Mount a data directory to persist the SQLite database across container restarts
       - ./data:/app/backend/data
+<<<<<<< HEAD
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: connect4-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - connect4 # Changed from connect4-game
+    env_file:
+      - .env
