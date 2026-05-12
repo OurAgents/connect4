@@ -67,7 +67,7 @@ function App() {
         playSwish(); // chip dropping
         
         if (data.state.status === 'won') {
-           if (data.state.winner === sessionId) {
+           if (data.state.winner === id) {
                playWin();
            } else {
                playLose();

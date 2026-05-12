@@ -1,0 +1,11 @@
+--- frontend/src/App.tsx
++++ frontend/src/App.tsx
+@@ -69,7 +69,7 @@
+         playSwish(); // chip dropping
+         
+         if (data.state.status === 'won') {
+-           if (data.state.winner === id) {
++           if (data.state.winner === sessionId) {
+                playWin();
+            } else {
+                playLose();
